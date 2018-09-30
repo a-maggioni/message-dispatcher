@@ -1,5 +1,9 @@
 package it.intre.messagedispatcher.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.Objects;
 
 public class KafkaRecord<K, V> extends Record<K, V> {
@@ -21,26 +25,17 @@ public class KafkaRecord<K, V> extends Record<K, V> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof KafkaRecord)) return false;
-        KafkaRecord<?, ?> kafkaRecord = (KafkaRecord<?, ?>) o;
-        return Objects.equals(getTopic(), kafkaRecord.getTopic()) &&
-                Objects.equals(getKey(), kafkaRecord.getKey()) &&
-                Objects.equals(getValue(), kafkaRecord.getValue());
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTopic(), getKey(), getValue());
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     @Override
     public String toString() {
-        return "KafkaRecord{" +
-                "topic='" + topic + '\'' +
-                ", key=" + key +
-                ", value=" + value +
-                '}';
+        return ToStringBuilder.reflectionToString(this);
     }
 }
